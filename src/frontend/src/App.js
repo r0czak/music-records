@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Register } from "./Register"
-import { Login } from "./Login";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar";
+import Shop from "./pages/Shop/shop";
+import Cart from "./pages/Cart/cart";
+import { ShopContextProvider } from "./context/shop-context";
 
 function App() {
-  
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-
   return (
     <div className="App">
-      {
-        currentForm === "login" ? <Login onFormSwitch ={toggleForm}/> : <Register onFormSwitch ={toggleForm}/>
-      }
+      <ShopContextProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Shop />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </Router>
+      </ShopContextProvider>
     </div>
   );
 }

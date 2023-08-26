@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+    <changeSet id="2023-05-19-r0czak-1" author="r0czak">
+        <createTable tableName="refreshtoken">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_refreshtoken"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-2" author="r0czak">
+        <addUniqueConstraint columnNames="token" constraintName="uc_refreshtoken_token" tableName="refreshtoken"/>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-3" author="r0czak">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="refreshtoken"
+                                 constraintName="FK_REFRESHTOKEN_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>

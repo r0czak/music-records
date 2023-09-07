@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+    <changeSet id="2023-05-19-r0czak-1" author="r0czak">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_roles"/>
+            </column>
+            <column name="name" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-2" author="r0czak">
+        <createTable tableName="user_roles">
+            <column name="role_id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_roles"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_roles"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-3" author="r0czak">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="username" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(50)"/>
+            <column name="password" type="VARCHAR(120)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-4" author="r0czak">
+        <addUniqueConstraint columnNames="email" constraintName="uc_74165e195b2f7b25de690d14a" tableName="users"/>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-5" author="r0czak">
+        <addUniqueConstraint columnNames="username" constraintName="uc_77584fbe74cc86922be2a3560" tableName="users"/>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-6" author="r0czak">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_roles" constraintName="fk_userol_on_role"
+                                 referencedColumnNames="id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet id="2023-05-19-r0czak-7" author="r0czak">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_roles" constraintName="fk_userol_on_user"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>
